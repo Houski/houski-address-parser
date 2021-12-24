@@ -155,22 +155,6 @@ test("Quebec City, Quebec passes", async function () {
   });
 });
 
-test("Quebec City, Quebec passes", async function () {
-  const parsedAddress = houskiAddressParser(
-    "202, 1712 37 Street SE Calgary, Alberta T2A1E8"
-  );
-  assert.deepEqual(parsedAddress, {
-    city: "QUEBEC CITY",
-    full: "7333 37 AVENUE NW 51ST STREET QUEBEC CITY QUEBEC T2C3N4",
-    fullWithCountry:
-      "7333 37 AVENUE NW 51ST STREET QUEBEC CITY QUEBEC CANADA T2C3N4",
-    long: "7333 37 AVENUE NW 51ST STREET",
-    postalCode: "T2C3N4",
-    province: "QUEBEC",
-    short: "7333 37 AVE NW 51ST ST",
-  });
-});
-
 !(async function () {
   await test.run();
 })();
