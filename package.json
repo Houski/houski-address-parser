@@ -1,0 +1,23 @@
+{
+  "name": "houski-address-parser",
+  "version": "1.0.0",
+  "description": "Standardizes Canadian postal addresses",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Houski/houski-address-parser.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Houski/houski-address-parser/issues"
+  },
+  "homepage": "https://github.com/Houski/houski-address-parser#readme",
+  "devDependencies": {
+    "baretest": "^2.0.0"
+  }
+}
