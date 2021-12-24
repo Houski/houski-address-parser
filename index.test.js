@@ -187,6 +187,36 @@ test("Quebec City, Quebec passes", async function () {
   });
 });
 
+test("Directions converter for north west works", async function () {
+  const parsedAddress = houskiAddressParser(
+    "412 kindcora heath north west calgary alberta canada "
+  );
+  assert.deepEqual(parsedAddress, {
+    city: "CALGARY",
+    full: "412 KINDCORA HEATH NW CALGARY ALBERTA",
+    fullWithCountry: "412 KINDCORA HEATH NW CALGARY ALBERTA CANADA",
+    long: "412 KINDCORA HEATH NW",
+    postalCode: null,
+    province: "ALBERTA",
+    short: "412 KINDCORA HEATH NW",
+  });
+});
+
+test("Directions converter for west works", async function () {
+  const parsedAddress = houskiAddressParser(
+    "412 kindcora heath west calgary alberta canada "
+  );
+  assert.deepEqual(parsedAddress, {
+    city: "CALGARY",
+    full: "412 KINDCORA HEATH W CALGARY ALBERTA",
+    fullWithCountry: "412 KINDCORA HEATH W CALGARY ALBERTA CANADA",
+    long: "412 KINDCORA HEATH W",
+    postalCode: null,
+    province: "ALBERTA",
+    short: "412 KINDCORA HEATH W",
+  });
+});
+
 !(async function () {
   await test.run();
 })();

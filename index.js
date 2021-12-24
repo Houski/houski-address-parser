@@ -51,10 +51,22 @@ module.exports = function houskiAddressParser(address) {
   const citySpaceRegex =
     /(St. John's|St John's|St. Catharines|St Catharines|Quebec City)/gim;
 
+  const northEastRegex = /[\s](Northeast|north east)[\s]/gim;
+  const northWestRegex = /[\s](Northwest|north west)[\s]/gim;
+  const southEastRegex = /[\s](Southeast|south east)[\s]/gim;
+  const southWestRegex = /[\s](Southwest|south west)[\s]/gim;
+  const northRegex = /[\s](north)[\s]/gim;
+  const eastRegex = /[\s](east)[\s]/gim;
+  const southRegex = /[\s](south)[\s]/gim;
+  const westRegex = /[\s](west)[\s]/gim;
+
   let city = null;
   let originalCityElement = null;
   let province = null;
   let originalProvinceElement = null;
+
+  // only allow letters and numbers and spaces
+  address = address.replace(onlyLettersNumbersDashesAndApostraphe, "");
 
   // find and remove the postal code.
   const postalCodeParsed =
@@ -66,8 +78,17 @@ module.exports = function houskiAddressParser(address) {
 
   address = address.replace(postalCode, "");
 
-  // only allow letters and numbers and spaces
-  address = address.replace(onlyLettersNumbersDashesAndApostraphe, "");
+  // Standardize DIRECTIONS like NORTHWEST/NORTH WEST to NW
+
+  address = address.replace(northEastRegex, " NE ");
+  address = address.replace(northWestRegex, " NW ");
+  address = address.replace(southEastRegex, " SE ");
+  address = address.replace(southWestRegex, " SW ");
+
+  address = address.replace(northRegex, " N ");
+  address = address.replace(eastRegex, " E ");
+  address = address.replace(southRegex, " S ");
+  address = address.replace(westRegex, " W ");
 
   /////////////////////////// CITY LOGIC ///////////////////////////////
 
@@ -201,7 +222,10 @@ module.exports = function houskiAddressParser(address) {
   const result = {
     short: shortAddress,
     long: longAddress,
-    full: [longAddress, city, province, postalCodeParsed].join(" ").trim(),
+    full: [longAddress, city, province, postalCodeParsed]
+      .join(" ")
+      .replace(regexDoubleSpaces, " ")
+      .trim(),
     fullWithCountry: [
       longAddress,
       city,
@@ -210,6 +234,7 @@ module.exports = function houskiAddressParser(address) {
       postalCodeParsed,
     ]
       .join(" ")
+      .replace(regexDoubleSpaces, " ")
       .trim(),
     city: city,
     province: province,
