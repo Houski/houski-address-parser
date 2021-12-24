@@ -139,6 +139,38 @@ test("Ottawa-Gatineau passes", async function () {
   });
 });
 
+test("Ottawa passes", async function () {
+  const parsedAddress = houskiAddressParser(
+    "7333 37 AV NW t2c3n4 51st street Ottawa, Ontario, canada"
+  );
+  assert.deepEqual(parsedAddress, {
+    city: "OTTAWA",
+    full: "7333 37 AVENUE NW 51ST STREET OTTAWA ONTARIO T2C3N4",
+    fullWithCountry:
+      "7333 37 AVENUE NW 51ST STREET OTTAWA ONTARIO CANADA T2C3N4",
+    long: "7333 37 AVENUE NW 51ST STREET",
+    postalCode: "T2C3N4",
+    province: "ONTARIO",
+    short: "7333 37 AVE NW 51ST ST",
+  });
+});
+
+test("Gatineau passes", async function () {
+  const parsedAddress = houskiAddressParser(
+    "7333 37 AV NW t2c3n4 51st street Gatineau, Ontario, canada"
+  );
+  assert.deepEqual(parsedAddress, {
+    city: "GATINEAU",
+    full: "7333 37 AVENUE NW 51ST STREET GATINEAU ONTARIO T2C3N4",
+    fullWithCountry:
+      "7333 37 AVENUE NW 51ST STREET GATINEAU ONTARIO CANADA T2C3N4",
+    long: "7333 37 AVENUE NW 51ST STREET",
+    postalCode: "T2C3N4",
+    province: "ONTARIO",
+    short: "7333 37 AVE NW 51ST ST",
+  });
+});
+
 test("Quebec City, Quebec passes", async function () {
   const parsedAddress = houskiAddressParser(
     "7333 37 AV NW t2c3n4 51st street Quebec City, Quebec, canada"
