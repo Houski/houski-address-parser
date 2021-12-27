@@ -217,6 +217,51 @@ test("Directions converter for west works", async function () {
   });
 });
 
+test("Make sure SE is kept", async function () {
+  const parsedAddress = houskiAddressParser(
+    "8, 7630 Ogden Road SE|Calgary, Alberta T2C1C1"
+  );
+  assert.deepEqual(parsedAddress, {
+    city: "CALGARY",
+    full: "8 7630 OGDEN ROAD SE CALGARY ALBERTA T2C1C1",
+    fullWithCountry: "8 7630 OGDEN ROAD SE CALGARY ALBERTA CANADA T2C1C1",
+    long: "8 7630 OGDEN ROAD SE",
+    postalCode: "T2C1C1",
+    province: "ALBERTA",
+    short: "8 7630 OGDEN RD SE",
+  });
+});
+
+test("Check that CLOSE suffix works", async function () {
+  const parsedAddress = houskiAddressParser(
+    "239 Riverside Close SE, Edmonton, Alberta, Canada"
+  );
+  assert.deepEqual(parsedAddress, {
+    city: "EDMONTON",
+    full: "239 RIVERSIDE CLOSE SE EDMONTON ALBERTA",
+    fullWithCountry: "239 RIVERSIDE CLOSE SE EDMONTON ALBERTA CANADA",
+    long: "239 RIVERSIDE CLOSE SE",
+    postalCode: null,
+    province: "ALBERTA",
+    short: "239 RIVERSIDE CL SE",
+  });
+});
+
+test("Check that VILLA suffix works", async function () {
+  const parsedAddress = houskiAddressParser(
+    "6 Rivercrest Villas SE|Calgary, Alberta T2C4K4"
+  );
+  assert.deepEqual(parsedAddress, {
+    city: "CALGARY",
+    full: "6 RIVERCREST VILLAS SE CALGARY ALBERTA T2C4K4",
+    fullWithCountry: "6 RIVERCREST VILLAS SE CALGARY ALBERTA CANADA T2C4K4",
+    long: "6 RIVERCREST VILLAS SE",
+    postalCode: "T2C4K4",
+    province: "ALBERTA",
+    short: "6 RIVERCREST VI SE",
+  });
+});
+
 !(async function () {
   await test.run();
 })();

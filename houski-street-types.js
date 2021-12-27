@@ -1023,4 +1023,15 @@ module.exports = [
     abbrs: ["WELLS", "WLS"],
     standardAbbr: "WLS",
   },
+  // SPECIAL ONES FOR CANADA
+  {
+    suffix: "CLOSE",
+    abbrs: ["CLOSE", "CL"],
+    standardAbbr: "CL",
+  },
+  {
+    suffix: "VILLAS",
+    abbrs: ["VILLAS", "VI"],
+    standardAbbr: "VI",
+  },
 ];

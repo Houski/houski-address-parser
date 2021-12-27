@@ -3,6 +3,7 @@ let suffix = require("./houski-street-suffix");
 module.exports = function houskiAddressParser(address) {
   const onlyLettersAndNumbers = /[^A-Za-z0-9]/gim;
   const onlyLettersNumbersDashesAndApostraphe = /[^A-Za-z0-9\-\' ]/gim;
+  const specialCharacters = /\|/gim;
 
   const regexDoubleSpaces = /\s\s+/g;
 
@@ -65,6 +66,9 @@ module.exports = function houskiAddressParser(address) {
   let province = null;
   let originalProvinceElement = null;
 
+  // Replace certain special characters with spaces
+  address = address.replace(specialCharacters, " ");
+
   // only allow letters and numbers and spaces
   address = address.replace(onlyLettersNumbersDashesAndApostraphe, "");
 
@@ -93,9 +97,6 @@ module.exports = function houskiAddressParser(address) {
   /////////////////////////// CITY LOGIC ///////////////////////////////
 
   if (address.match(cityRegex)) {
-    // Find every value that matches in the address string
-    const matchingCityValues = address.match(cityRegex);
-
     // Split the address into an array for next steps
     address = address.split(" ");
 
@@ -142,9 +143,6 @@ module.exports = function houskiAddressParser(address) {
   /////////////////////////// PROVINCE LOGIC ///////////////////////////////
 
   if (address.match(allProvincesRegex)) {
-    // Find every value that matches in the address string
-    const matchingProvinceValues = address.match(allProvincesRegex);
-
     // Split the address into an array for next steps
     address = address.split(" ");
 
