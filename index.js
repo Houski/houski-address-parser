@@ -1,8 +1,6 @@
 let suffix = require("./houski-street-suffix");
 let capitalizeAddress = require("./capitalize-address");
 
-// pointless comment for git
-
 module.exports = function houskiAddressParser(address) {
   const onlyLettersAndNumbers = /[^A-Za-z0-9]/gim;
   const onlyLettersNumbersDashesAndApostraphe = /[^A-Za-z0-9\-\' ]/gim;
