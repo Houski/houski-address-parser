@@ -16,20 +16,22 @@ In your node project:
 
 Simply run the function on an address string:
 
-`houskiAddressParser("202, 1712 37 Street SE Calgary, Alberta T2A1E8")`
+`houskiAddressParser("7333 37 AV NW t2c3n4 51st street Ottawa-Gatineau, Ontario, canada")`
 
 That should give the resulting object of:
 
 ```js
 {
-  city: 'CALGARY',
-  full: '202 1712 37 STREET SE CALGARY ALBERTA T2A1E8',
-  fullWithCountry: '202 1712 37 STREET SE CALGARY ALBERTA CANADA T2A1E8',
-  long: '202 1712 37 STREET SE',
-  postalCode: 'T2A1E8',
-  province: 'ALBERTA',
-  short: '202 1712 37 ST SE'
-}
+    city: "Ottawa-Gatineau",
+    full: "7333 37 Avenue NW 51st Street Ottawa-Gatineau Ontario",
+    fullWithCountry:
+      "7333 37 Avenue NW 51st Street Ottawa-Gatineau Ontario Canada",
+    key: "733337avenw51stst",
+    long: "7333 37 Avenue NW 51st Street",
+    postalCode: "T2C3N4",
+    province: "Ontario",
+    short: "7333 37 AVE NW 51st ST",
+  }
 ```
 
 Check the package's index.test.js file for more examples.
