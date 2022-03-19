@@ -642,7 +642,7 @@ module.exports = [
   },
   {
     suffix: "PARK",
-    abbrs: ["PARK", "PRK"],
+    abbrs: ["PARK", "PRK", "PA"],
     standardAbbr: "PARK",
   },
   {
@@ -1023,7 +1023,7 @@ module.exports = [
     abbrs: ["WELLS", "WLS"],
     standardAbbr: "WLS",
   },
-  // SPECIAL ONES FOR CANADA
+  // SPECIAL OVERRIDES FOR CANADA
   {
     suffix: "CLOSE",
     abbrs: ["CLOSE", "CL"],
@@ -1033,5 +1033,45 @@ module.exports = [
     suffix: "VILLAS",
     abbrs: ["VILLAS", "VI"],
     standardAbbr: "VI",
+  },
+  {
+    suffix: "TERRACE",
+    abbrs: ["TERRACE", "TC"],
+    standardAbbr: "TC",
+  },
+  {
+    suffix: "TRAIL",
+    abbrs: ["TRAIL", "TR", "TRL"],
+    standardAbbr: "TR",
+  },
+  {
+    suffix: "TRAILS",
+    abbrs: ["TRAILS", "TRLS"],
+    standardAbbr: "TRLS",
+  },
+  {
+    suffix: "GREEN",
+    abbrs: ["GREEN", "GR"],
+    standardAbbr: "GR",
+  },
+  {
+    suffix: "CRESCENT",
+    abbrs: ["CRESCENT", "CR"],
+    standardAbbr: "CR",
+  },
+  {
+    suffix: "COURT",
+    abbrs: ["COURT", "CO"],
+    standardAbbr: "CO",
+  },
+  {
+    suffix: "MEWS",
+    abbrs: ["MEWS", "ME"],
+    standardAbbr: "ME",
+  },
+  {
+    suffix: "PARK",
+    abbrs: ["PARK", "PA"],
+    standardAbbr: "PA",
   },
 ];

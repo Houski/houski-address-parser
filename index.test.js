@@ -7,13 +7,14 @@ test("Having a street with the name of a province works w/ country", async funct
     "458 Quebec Street, Calgary, Alberta, Canada"
   );
   assert.deepEqual(parsedAddress, {
-    city: "CALGARY",
-    full: "458 QUEBEC STREET CALGARY ALBERTA",
-    fullWithCountry: "458 QUEBEC STREET CALGARY ALBERTA CANADA",
-    long: "458 QUEBEC STREET",
+    city: "Calgary",
+    full: "458 Quebec Street Calgary Alberta",
+    fullWithCountry: "458 Quebec Street Calgary Alberta Canada",
+    key: "458quebecst",
+    long: "458 Quebec Street",
     postalCode: null,
-    province: "ALBERTA",
-    short: "458 QUEBEC ST",
+    province: "Alberta",
+    short: "458 Quebec ST",
   });
 });
 
@@ -22,13 +23,14 @@ test("Having a street with the name of a province works w/ out country", async f
     "458 Quebec Street, Calgary, Alberta"
   );
   assert.deepEqual(parsedAddress, {
-    city: "CALGARY",
-    full: "458 QUEBEC STREET CALGARY ALBERTA",
-    fullWithCountry: "458 QUEBEC STREET CALGARY ALBERTA CANADA",
-    long: "458 QUEBEC STREET",
+    city: "Calgary",
+    full: "458 Quebec Street Calgary Alberta",
+    fullWithCountry: "458 Quebec Street Calgary Alberta Canada",
+    key: "458quebecst",
+    long: "458 Quebec Street",
     postalCode: null,
-    province: "ALBERTA",
-    short: "458 QUEBEC ST",
+    province: "Alberta",
+    short: "458 Quebec ST",
   });
 });
 
@@ -36,12 +38,13 @@ test("Having a street with the name of a city works", async function () {
   const parsedAddress = houskiAddressParser("908 Edmonton Trail");
   assert.deepEqual(parsedAddress, {
     city: null,
-    full: "908 EDMONTON TRAIL",
-    fullWithCountry: "908 EDMONTON TRAIL",
-    long: "908 EDMONTON TRAIL",
+    full: "908 Edmonton Trail",
+    fullWithCountry: "908 Edmonton Trail",
+    key: "908edmontontr",
+    long: "908 Edmonton Trail",
     postalCode: null,
     province: null,
-    short: "908 EDMONTON TRL",
+    short: "908 Edmonton TR",
   });
 });
 
@@ -50,13 +53,14 @@ test("Having a street with the name of a city works with the real city after it"
     "908 Edmonton Trail, Calgary, AB T2E 3K1"
   );
   assert.deepEqual(parsedAddress, {
-    city: "CALGARY",
-    full: "908 EDMONTON TRAIL CALGARY ALBERTA T2E3K1",
-    fullWithCountry: "908 EDMONTON TRAIL CALGARY ALBERTA CANADA T2E3K1",
-    long: "908 EDMONTON TRAIL",
+    city: "Calgary",
+    full: "908 Edmonton Trail Calgary Alberta",
+    fullWithCountry: "908 Edmonton Trail Calgary Alberta Canada",
+    key: "908edmontontr",
+    long: "908 Edmonton Trail",
     postalCode: "T2E3K1",
-    province: "ALBERTA",
-    short: "908 EDMONTON TRL",
+    province: "Alberta",
+    short: "908 Edmonton TR",
   });
 });
 
@@ -65,13 +69,14 @@ test("Symbols like hash signs are filtered out correctly", async function () {
     "#7333 37 AV NW Edmonton street, Calgary alberta, canada"
   );
   assert.deepEqual(parsedAddress, {
-    city: "CALGARY",
-    full: "7333 37 AVENUE NW EDMONTON STREET CALGARY ALBERTA",
-    fullWithCountry: "7333 37 AVENUE NW EDMONTON STREET CALGARY ALBERTA CANADA",
-    long: "7333 37 AVENUE NW EDMONTON STREET",
+    city: "Calgary",
+    full: "7333 37 Avenue NW Edmonton Street Calgary Alberta",
+    fullWithCountry: "7333 37 Avenue NW Edmonton Street Calgary Alberta Canada",
+    key: "733337avenwedmontonst",
+    long: "7333 37 Avenue NW Edmonton Street",
     postalCode: null,
-    province: "ALBERTA",
-    short: "7333 37 AVE NW EDMONTON ST",
+    province: "Alberta",
+    short: "7333 37 AVE NW Edmonton ST",
   });
 });
 
@@ -80,14 +85,14 @@ test("Postal codes are parsed correctly", async function () {
     "7333 37 AV NW t2c3n4 Edmonton street, Calgary alberta, canada"
   );
   assert.deepEqual(parsedAddress, {
-    city: "CALGARY",
-    full: "7333 37 AVENUE NW EDMONTON STREET CALGARY ALBERTA T2C3N4",
-    fullWithCountry:
-      "7333 37 AVENUE NW EDMONTON STREET CALGARY ALBERTA CANADA T2C3N4",
-    long: "7333 37 AVENUE NW EDMONTON STREET",
+    city: "Calgary",
+    full: "7333 37 Avenue NW Edmonton Street Calgary Alberta",
+    fullWithCountry: "7333 37 Avenue NW Edmonton Street Calgary Alberta Canada",
+    key: "733337avenwedmontonst",
+    long: "7333 37 Avenue NW Edmonton Street",
     postalCode: "T2C3N4",
-    province: "ALBERTA",
-    short: "7333 37 AVE NW EDMONTON ST",
+    province: "Alberta",
+    short: "7333 37 AVE NW Edmonton ST",
   });
 });
 
@@ -96,14 +101,15 @@ test("Cities with spaces in the name pass", async function () {
     "7333 37 AV NW t2c3n4 Edmonton street, St. John's alberta, canada"
   );
   assert.deepEqual(parsedAddress, {
-    city: "ST JOHN'S",
-    full: "7333 37 AVENUE NW EDMONTON STREET ST JOHN'S ALBERTA T2C3N4",
+    city: "St John's",
+    full: "7333 37 Avenue NW Edmonton Street St John's Alberta",
     fullWithCountry:
-      "7333 37 AVENUE NW EDMONTON STREET ST JOHN'S ALBERTA CANADA T2C3N4",
-    long: "7333 37 AVENUE NW EDMONTON STREET",
+      "7333 37 Avenue NW Edmonton Street St John's Alberta Canada",
+    key: "733337avenwedmontonst",
+    long: "7333 37 Avenue NW Edmonton Street",
     postalCode: "T2C3N4",
-    province: "ALBERTA",
-    short: "7333 37 AVE NW EDMONTON ST",
+    province: "Alberta",
+    short: "7333 37 AVE NW Edmonton ST",
   });
 });
 
@@ -112,14 +118,15 @@ test("French city names pass", async function () {
     "7333 37 AV NW t2c3n4 51st street Trois-Rivières, quebec, canada"
   );
   assert.deepEqual(parsedAddress, {
-    city: "TROIS-RIVIRES",
-    full: "7333 37 AVENUE NW 51ST STREET TROIS-RIVIRES QUEBEC T2C3N4",
+    city: "Trois-Rivires",
+    full: "7333 37 Avenue NW 51st Street Trois-Rivires Quebec",
     fullWithCountry:
-      "7333 37 AVENUE NW 51ST STREET TROIS-RIVIRES QUEBEC CANADA T2C3N4",
-    long: "7333 37 AVENUE NW 51ST STREET",
+      "7333 37 Avenue NW 51st Street Trois-Rivires Quebec Canada",
+    key: "733337avenw51stst",
+    long: "7333 37 Avenue NW 51st Street",
     postalCode: "T2C3N4",
-    province: "QUEBEC",
-    short: "7333 37 AVE NW 51ST ST",
+    province: "Quebec",
+    short: "7333 37 AVE NW 51st ST",
   });
 });
 
@@ -128,14 +135,15 @@ test("Ottawa-Gatineau passes", async function () {
     "7333 37 AV NW t2c3n4 51st street Ottawa-Gatineau, Ontario, canada"
   );
   assert.deepEqual(parsedAddress, {
-    city: "OTTAWA-GATINEAU",
-    full: "7333 37 AVENUE NW 51ST STREET OTTAWA-GATINEAU ONTARIO T2C3N4",
+    city: "Ottawa-Gatineau",
+    full: "7333 37 Avenue NW 51st Street Ottawa-Gatineau Ontario",
     fullWithCountry:
-      "7333 37 AVENUE NW 51ST STREET OTTAWA-GATINEAU ONTARIO CANADA T2C3N4",
-    long: "7333 37 AVENUE NW 51ST STREET",
+      "7333 37 Avenue NW 51st Street Ottawa-Gatineau Ontario Canada",
+    key: "733337avenw51stst",
+    long: "7333 37 Avenue NW 51st Street",
     postalCode: "T2C3N4",
-    province: "ONTARIO",
-    short: "7333 37 AVE NW 51ST ST",
+    province: "Ontario",
+    short: "7333 37 AVE NW 51st ST",
   });
 });
 
@@ -144,14 +152,14 @@ test("Ottawa passes", async function () {
     "7333 37 AV NW t2c3n4 51st street Ottawa, Ontario, canada"
   );
   assert.deepEqual(parsedAddress, {
-    city: "OTTAWA",
-    full: "7333 37 AVENUE NW 51ST STREET OTTAWA ONTARIO T2C3N4",
-    fullWithCountry:
-      "7333 37 AVENUE NW 51ST STREET OTTAWA ONTARIO CANADA T2C3N4",
-    long: "7333 37 AVENUE NW 51ST STREET",
+    city: "Ottawa",
+    full: "7333 37 Avenue NW 51st Street Ottawa Ontario",
+    fullWithCountry: "7333 37 Avenue NW 51st Street Ottawa Ontario Canada",
+    key: "733337avenw51stst",
+    long: "7333 37 Avenue NW 51st Street",
     postalCode: "T2C3N4",
-    province: "ONTARIO",
-    short: "7333 37 AVE NW 51ST ST",
+    province: "Ontario",
+    short: "7333 37 AVE NW 51st ST",
   });
 });
 
@@ -160,14 +168,14 @@ test("Gatineau passes", async function () {
     "7333 37 AV NW t2c3n4 51st street Gatineau, Ontario, canada"
   );
   assert.deepEqual(parsedAddress, {
-    city: "GATINEAU",
-    full: "7333 37 AVENUE NW 51ST STREET GATINEAU ONTARIO T2C3N4",
-    fullWithCountry:
-      "7333 37 AVENUE NW 51ST STREET GATINEAU ONTARIO CANADA T2C3N4",
-    long: "7333 37 AVENUE NW 51ST STREET",
+    city: "Gatineau",
+    full: "7333 37 Avenue NW 51st Street Gatineau Ontario",
+    fullWithCountry: "7333 37 Avenue NW 51st Street Gatineau Ontario Canada",
+    key: "733337avenw51stst",
+    long: "7333 37 Avenue NW 51st Street",
     postalCode: "T2C3N4",
-    province: "ONTARIO",
-    short: "7333 37 AVE NW 51ST ST",
+    province: "Ontario",
+    short: "7333 37 AVE NW 51st ST",
   });
 });
 
@@ -176,14 +184,14 @@ test("Quebec City, Quebec passes", async function () {
     "7333 37 AV NW t2c3n4 51st street Quebec City, Quebec, canada"
   );
   assert.deepEqual(parsedAddress, {
-    city: "QUEBEC CITY",
-    full: "7333 37 AVENUE NW 51ST STREET QUEBEC CITY QUEBEC T2C3N4",
-    fullWithCountry:
-      "7333 37 AVENUE NW 51ST STREET QUEBEC CITY QUEBEC CANADA T2C3N4",
-    long: "7333 37 AVENUE NW 51ST STREET",
+    city: "Quebec City",
+    full: "7333 37 Avenue NW 51st Street Quebec City Quebec",
+    fullWithCountry: "7333 37 Avenue NW 51st Street Quebec City Quebec Canada",
+    key: "733337avenw51stst",
+    long: "7333 37 Avenue NW 51st Street",
     postalCode: "T2C3N4",
-    province: "QUEBEC",
-    short: "7333 37 AVE NW 51ST ST",
+    province: "Quebec",
+    short: "7333 37 AVE NW 51st ST",
   });
 });
 
@@ -192,13 +200,14 @@ test("Directions converter for north west works", async function () {
     "412 kindcora heath north west calgary alberta canada "
   );
   assert.deepEqual(parsedAddress, {
-    city: "CALGARY",
-    full: "412 KINDCORA HEATH NW CALGARY ALBERTA",
-    fullWithCountry: "412 KINDCORA HEATH NW CALGARY ALBERTA CANADA",
-    long: "412 KINDCORA HEATH NW",
+    city: "Calgary",
+    full: "412 Kindcora Heath NW Calgary Alberta",
+    fullWithCountry: "412 Kindcora Heath NW Calgary Alberta Canada",
+    key: "412kindcoraheathnw",
+    long: "412 Kindcora Heath NW",
     postalCode: null,
-    province: "ALBERTA",
-    short: "412 KINDCORA HEATH NW",
+    province: "Alberta",
+    short: "412 Kindcora Heath NW",
   });
 });
 
@@ -207,13 +216,14 @@ test("Directions converter for west works", async function () {
     "412 kindcora heath west calgary alberta canada "
   );
   assert.deepEqual(parsedAddress, {
-    city: "CALGARY",
-    full: "412 KINDCORA HEATH W CALGARY ALBERTA",
-    fullWithCountry: "412 KINDCORA HEATH W CALGARY ALBERTA CANADA",
-    long: "412 KINDCORA HEATH W",
+    city: "Calgary",
+    full: "412 Kindcora Heath W Calgary Alberta",
+    fullWithCountry: "412 Kindcora Heath W Calgary Alberta Canada",
+    key: "412kindcoraheathw",
+    long: "412 Kindcora Heath W",
     postalCode: null,
-    province: "ALBERTA",
-    short: "412 KINDCORA HEATH W",
+    province: "Alberta",
+    short: "412 Kindcora Heath W",
   });
 });
 
@@ -222,13 +232,14 @@ test("Make sure SE is kept", async function () {
     "8, 7630 Ogden Road SE|Calgary, Alberta T2C1C1"
   );
   assert.deepEqual(parsedAddress, {
-    city: "CALGARY",
-    full: "8 7630 OGDEN ROAD SE CALGARY ALBERTA T2C1C1",
-    fullWithCountry: "8 7630 OGDEN ROAD SE CALGARY ALBERTA CANADA T2C1C1",
-    long: "8 7630 OGDEN ROAD SE",
+    city: "Calgary",
+    full: "8 7630 Ogden Road SE Calgary Alberta",
+    fullWithCountry: "8 7630 Ogden Road SE Calgary Alberta Canada",
+    key: "87630ogdenrdse",
+    long: "8 7630 Ogden Road SE",
     postalCode: "T2C1C1",
-    province: "ALBERTA",
-    short: "8 7630 OGDEN RD SE",
+    province: "Alberta",
+    short: "8 7630 Ogden RD SE",
   });
 });
 
@@ -237,13 +248,14 @@ test("Check that CLOSE suffix works", async function () {
     "239 Riverside Close SE, Edmonton, Alberta, Canada"
   );
   assert.deepEqual(parsedAddress, {
-    city: "EDMONTON",
-    full: "239 RIVERSIDE CLOSE SE EDMONTON ALBERTA",
-    fullWithCountry: "239 RIVERSIDE CLOSE SE EDMONTON ALBERTA CANADA",
-    long: "239 RIVERSIDE CLOSE SE",
+    city: "Edmonton",
+    full: "239 Riverside Close SE Edmonton Alberta",
+    fullWithCountry: "239 Riverside Close SE Edmonton Alberta Canada",
+    key: "239riversideclse",
+    long: "239 Riverside Close SE",
     postalCode: null,
-    province: "ALBERTA",
-    short: "239 RIVERSIDE CL SE",
+    province: "Alberta",
+    short: "239 Riverside CL SE",
   });
 });
 
@@ -252,13 +264,62 @@ test("Check that VILLA suffix works", async function () {
     "6 Rivercrest Villas SE|Calgary, Alberta T2C4K4"
   );
   assert.deepEqual(parsedAddress, {
-    city: "CALGARY",
-    full: "6 RIVERCREST VILLAS SE CALGARY ALBERTA T2C4K4",
-    fullWithCountry: "6 RIVERCREST VILLAS SE CALGARY ALBERTA CANADA T2C4K4",
-    long: "6 RIVERCREST VILLAS SE",
+    city: "Calgary",
+    full: "6 Rivercrest Villas SE Calgary Alberta",
+    fullWithCountry: "6 Rivercrest Villas SE Calgary Alberta Canada",
+    key: "6rivercrestvise",
+    long: "6 Rivercrest Villas SE",
     postalCode: "T2C4K4",
-    province: "ALBERTA",
-    short: "6 RIVERCREST VI SE",
+    province: "Alberta",
+    short: "6 Rivercrest VI SE",
+  });
+});
+
+test("Check that COURT OVERRIDE suffix works", async function () {
+  const parsedAddress = houskiAddressParser(
+    "6 Rivercrest CO SE|Calgary, Alberta T2C4K4"
+  );
+  assert.deepEqual(parsedAddress, {
+    city: "Calgary",
+    full: "6 Rivercrest Court SE Calgary Alberta",
+    fullWithCountry: "6 Rivercrest Court SE Calgary Alberta Canada",
+    key: "6rivercrestcose",
+    long: "6 Rivercrest Court SE",
+    postalCode: "T2C4K4",
+    province: "Alberta",
+    short: "6 Rivercrest CO SE",
+  });
+});
+
+test("Check that COURT OVERRIDE suffix works 2", async function () {
+  const parsedAddress = houskiAddressParser(
+    "6 Rivercrest court SE|Calgary, Alberta T2C4K4"
+  );
+  assert.deepEqual(parsedAddress, {
+    city: "Calgary",
+    full: "6 Rivercrest Court SE Calgary Alberta",
+    fullWithCountry: "6 Rivercrest Court SE Calgary Alberta Canada",
+    key: "6rivercrestcose",
+    long: "6 Rivercrest Court SE",
+    postalCode: "T2C4K4",
+    province: "Alberta",
+    short: "6 Rivercrest CO SE",
+  });
+});
+
+test("Check that TRAILS OVERRIDE suffix works", async function () {
+  const parsedAddress = houskiAddressParser(
+    "6 Rivercrest trails SE|Calgary, Alberta T2C4K4"
+  );
+  assert.deepEqual(parsedAddress, {
+    city: "Calgary",
+    full: "6 Rivercrest Trails SE Calgary Alberta",
+    fullWithCountry: "6 Rivercrest Trails SE Calgary Alberta Canada",
+    key: "6rivercresttrlsse",
+    long: "6 Rivercrest Trails SE",
+    postalCode: "T2C4K4",
+    province: "Alberta",
+    short: "6 Rivercrest TRLS SE",
   });
 });
 

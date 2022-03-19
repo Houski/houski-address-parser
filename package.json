@@ -1,6 +1,6 @@
 {
   "name": "houski-address-parser",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Standardizes Canadian postal addresses",
   "main": "index.js",
   "scripts": {

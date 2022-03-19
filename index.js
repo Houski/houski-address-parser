@@ -1,28 +1,31 @@
 let suffix = require("./houski-street-suffix");
+let capitalizeAddress = require("./capitalize-address");
 
 module.exports = function houskiAddressParser(address) {
   const onlyLettersAndNumbers = /[^A-Za-z0-9]/gim;
   const onlyLettersNumbersDashesAndApostraphe = /[^A-Za-z0-9\-\' ]/gim;
   const specialCharacters = /\|/gim;
 
-  const regexDoubleSpaces = /\s\s+/g;
+  const regexDoubleSpaces = /\s\s+/gim;
+
+  const regexAllWhitespace = /\s+/gim;
 
   const postalCode = /[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d/gim;
 
-  const regexAlberta = /\b(?:AB|Alta|alberta)\b/gim;
-  const regexBritishColumbia = /\b(?:BC|British Columbia)\b/gim;
-  const regexLabrador = /\b(?:LB|Labrador)\b/gim;
-  const regexManitoba = /\b(?:MB|Man|Manitoba)\b/gim;
-  const regexNewfoundLand = /\b(?:Nfld|NF|Newfoundland)\b/gim;
-  const regexNorthwestTerritories = /\b(?:NWT|Northwest Territories)\b/gim;
-  const regexNovaScotia = /\b(?:Nova Scotia)\b/gim;
-  const regexNewBrunswick = /\b(?:NB|New Brunswick)\b/gim;
-  const regexNunavut = /\b(?:Nunavut)\b/gim;
-  const regexOntario = /\b(?:ON|ONT|Ontario)\b/gim;
-  const regexPrinceEdwardIsland = /\b(?:PE|PEI|Prince Edward Island)\b/gim;
-  const regexQuebec = /\b(?:QC|PC|QUE|QU|Quebec)\b/gim;
-  const regexSaskatchewan = /\b(?:SK|Sask|Saskatchewan)\b/gim;
-  const regexYukon = /\b(?:YT|Yukon|Yukon Territories)\b/gim;
+  const regexAlberta = /\b(AB|Alta|alberta)\b/gim;
+  const regexBritishColumbia = /\b(BC|British Columbia)\b/gim;
+  const regexLabrador = /\b(LB|Labrador)\b/gim;
+  const regexManitoba = /\b(MB|Man|Manitoba)\b/gim;
+  const regexNewfoundLand = /\b(Nfld|NF|Newfoundland)\b/gim;
+  const regexNorthwestTerritories = /\b(NWT|Northwest Territories)\b/gim;
+  const regexNovaScotia = /\b(Nova Scotia)\b/gim;
+  const regexNewBrunswick = /\b(NB|New Brunswick)\b/gim;
+  const regexNunavut = /\b(Nunavut)\b/gim;
+  const regexOntario = /\b(ON|ONT|Ontario)\b/gim;
+  const regexPrinceEdwardIsland = /\b(PE|PEI|Prince Edward Island)\b/gim;
+  const regexQuebec = /\b(QC|PC|QUE|QU|Quebec)\b/gim;
+  const regexSaskatchewan = /\b(SK|Sask|Saskatchewan)\b/gim;
+  const regexYukon = /\b(YT|Yukon|Yukon Territories)\b/gim;
 
   const provincesRegex = [
     { regex: regexLabrador, province: "Labrador" },
@@ -41,13 +44,13 @@ module.exports = function houskiAddressParser(address) {
     { regex: regexAlberta, province: "Alberta" },
   ];
 
-  const regexCountry = /\b(?:Canada|CA)\b/gim;
+  const regexCountry = /\b(Canada|CA)\b/gim;
 
   const allProvincesRegex =
-    /\b(?:AB|Alta|alberta|BC|British Columbia|LB|Labrador|MB|Man|Manitoba|Nfld|NF|Newfoundland|NWT|Northwest Territories|Nova Scotia|NB|New Brunswick|Nunavut|ON|ONT|Ontario|PE|PEI|Prince Edward Island|QC|PC|QUE|QU|Quebec|SK|Sask|Saskatchewan|YT|Yukon|Yukon Territories)\b/gim;
+    /\b(AB|Alta|alberta|BC|British Columbia|LB|Labrador|MB|Man|Manitoba|Nfld|NF|Newfoundland|NWT|Northwest Territories|Nova Scotia|NB|New Brunswick|Nunavut|ON|ONT|Ontario|PE|PEI|Prince Edward Island|QC|PC|QUE|QU|Quebec|SK|Sask|Saskatchewan|YT|Yukon|Yukon Territories)\b/gim;
 
   const cityRegex =
-    /(Ottawa-Gatineau|trois-rivires|Chicoutimi–Jonquière|Toronto|Montreal|Vancouver|Calgary|Edmonton|Ottawa|Gatineau|Winnipeg|Hamilton|Kitchener|Laval|London|Victoria|Halifax|Oshawa|Windsor|Saskatoon|Regina|Kelowna|Barrie|Sherbrooke|Guelph|Abbotsford|Kingston|Kanata|Moncton|Milton|Brantford|Nanaimo|Sudbury|Lethbridge|Peterborough|Kamloops|Chilliwack|Sarnia|Drummondville|Belleville|St. John's|St John's|St. Catharines|St Catharines|Quebec City)/gim;
+    /(Ottawa-Gatineau|trois-rivires|Chicoutimi-Jonquière|Toronto|Montreal|Vancouver|Calgary|Edmonton|Ottawa|Gatineau|Winnipeg|Hamilton|Kitchener|Laval|London|Victoria|Halifax|Oshawa|Windsor|Saskatoon|Regina|Kelowna|Barrie|Sherbrooke|Guelph|Abbotsford|Kingston|Kanata|Moncton|Milton|Brantford|Nanaimo|Sudbury|Lethbridge|Peterborough|Kamloops|Chilliwack|Sarnia|Drummondville|Belleville|St. John's|St John's|St. Catharines|St Catharines|Quebec City)/gim;
 
   const citySpaceRegex =
     /(St. John's|St John's|St. Catharines|St Catharines|Quebec City)/gim;
@@ -215,27 +218,31 @@ module.exports = function houskiAddressParser(address) {
     .replace(regexDoubleSpaces, " ")
     .trim();
 
+  keyAddress = shortAddress.replace(regexAllWhitespace, "").toLowerCase();
+
   const cityAndProvinceExist = city && province;
 
   const result = {
-    short: shortAddress,
-    long: longAddress,
-    full: [longAddress, city, province, postalCodeParsed]
-      .join(" ")
-      .replace(regexDoubleSpaces, " ")
-      .trim(),
-    fullWithCountry: [
-      longAddress,
-      city,
-      province,
-      cityAndProvinceExist ? "CANADA" : null,
-      postalCodeParsed,
-    ]
-      .join(" ")
-      .replace(regexDoubleSpaces, " ")
-      .trim(),
-    city: city,
-    province: province,
+    short: capitalizeAddress(shortAddress)
+      .split(" ")
+      .map((word) => suffix.abbreviate(word) || word)
+      .join(" "),
+    long: capitalizeAddress(longAddress),
+    key: keyAddress,
+    full: capitalizeAddress(
+      [longAddress, city, province]
+        .join(" ")
+        .replace(regexDoubleSpaces, " ")
+        .trim()
+    ),
+    fullWithCountry: capitalizeAddress(
+      [longAddress, city, province, cityAndProvinceExist ? "Canada" : null]
+        .join(" ")
+        .replace(regexDoubleSpaces, " ")
+        .trim()
+    ),
+    city: capitalizeAddress(city),
+    province: capitalizeAddress(province),
     postalCode: postalCodeParsed,
   };
 
