@@ -18,6 +18,18 @@
   },
   "homepage": "https://github.com/Houski/houski-address-parser#readme",
   "devDependencies": {
-    "baretest": "^2.0.0"
+    "baretest": "^2.0.0",
+    "semantic-release": "^18.0.0"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/github",
+      "@semantic-release/npm"
+    ]
   }
 }
