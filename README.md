@@ -30,8 +30,37 @@ That should give the resulting object of:
     long: "7333 37 Avenue NW 51st Street",
     postalCode: "T2C3N4",
     province: "Ontario",
-    short: "7333 37 AVE NW 51st ST",
+    short: "7333 37 Ave NW 51st St",
   }
+```
+
+You can overide the abbreviations by passing in an array with this structure:
+
+```js
+const overrides = [
+  {
+    long: "PARK",
+    abbrs: ["PARK", "PRK", "PA"],
+    short: "PA",
+  },
+  {
+    long: "TERRACE",
+    abbrs: ["TERRACE", "TC"],
+    short: "TC",
+  },
+  {
+    long: "MEWS",
+    abbrs: ["MEWS", "ME"],
+    short: "ME",
+  },
+];
+
+// and then calling the address parser like so:
+
+houskiAddressParser(
+  "7333 37 AV NW t2c3n4 51st street Ottawa-Gatineau, Ontario, canada",
+  overrides
+);
 ```
 
 Check the package's index.test.js file for more examples.

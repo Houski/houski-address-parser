@@ -40,11 +40,11 @@ test("Having a street with the name of a city works", async function () {
     city: null,
     full: "908 Edmonton Trail",
     fullWithCountry: "908 Edmonton Trail",
-    key: "908edmontontr",
+    key: "908edmontontrl",
     long: "908 Edmonton Trail",
     postalCode: null,
     province: null,
-    short: "908 Edmonton Tr",
+    short: "908 Edmonton Trl",
   });
 });
 
@@ -56,11 +56,11 @@ test("Having a street with the name of a city works with the real city after it"
     city: "Calgary",
     full: "908 Edmonton Trail Calgary Alberta",
     fullWithCountry: "908 Edmonton Trail Calgary Alberta Canada",
-    key: "908edmontontr",
+    key: "908edmontontrl",
     long: "908 Edmonton Trail",
     postalCode: "T2E3K1",
     province: "Alberta",
-    short: "908 Edmonton Tr",
+    short: "908 Edmonton Trl",
   });
 });
 
@@ -243,7 +243,7 @@ test("Make sure SE is kept", async function () {
   });
 });
 
-test("Check that CLOSE suffix works", async function () {
+test("Check that CLOSE long works", async function () {
   const parsedAddress = houskiAddressParser(
     "239 Riverside Close SE, Edmonton, Alberta, Canada"
   );
@@ -259,7 +259,7 @@ test("Check that CLOSE suffix works", async function () {
   });
 });
 
-test("Check that VILLA suffix works", async function () {
+test("Check that VILLA long works", async function () {
   const parsedAddress = houskiAddressParser(
     "6 Rivercrest Villas SE|Calgary, Alberta T2C4K4"
   );
@@ -275,9 +275,53 @@ test("Check that VILLA suffix works", async function () {
   });
 });
 
-test("Check that COURT OVERRIDE suffix works", async function () {
+const calgaryOverrides = [
+  {
+    long: "PARK",
+    abbrs: ["PARK", "PRK", "PA"],
+    short: "PA",
+  },
+  {
+    long: "TERRACE",
+    abbrs: ["TERRACE", "TC"],
+    short: "TC",
+  },
+  {
+    long: "MEWS",
+    abbrs: ["MEWS", "ME"],
+    short: "ME",
+  },
+  {
+    long: "COURT",
+    abbrs: ["COURT", "CT", "CO"],
+    short: "CO",
+  },
+  {
+    long: "CRESCENT",
+    abbrs: ["CRESCENT", "CRES", "CRSENT", "CRSNT"],
+    short: "CR",
+  },
+  {
+    long: "GREEN",
+    abbrs: ["GREEN", "GR"],
+    short: "GR",
+  },
+  {
+    long: "TRAIL",
+    abbrs: ["TRAIL", "TRL"],
+    short: "TR",
+  },
+  {
+    long: "TRAILS",
+    abbrs: ["TRAILS", "TRLS"],
+    short: "TRS",
+  },
+];
+
+test("Check that COURT OVERRIDE long works", async function () {
   const parsedAddress = houskiAddressParser(
-    "6 Rivercrest CO SE|Calgary, Alberta T2C4K4"
+    "6 Rivercrest CO SE|Calgary, Alberta T2C4K4",
+    calgaryOverrides
   );
   assert.deepEqual(parsedAddress, {
     city: "Calgary",
@@ -291,9 +335,10 @@ test("Check that COURT OVERRIDE suffix works", async function () {
   });
 });
 
-test("Check that COURT OVERRIDE suffix works 2", async function () {
+test("Check that COURT OVERRIDE long works 2", async function () {
   const parsedAddress = houskiAddressParser(
-    "6 Rivercrest court SE|Calgary, Alberta T2C4K4"
+    "6 Rivercrest court SE|Calgary, Alberta T2C4K4",
+    calgaryOverrides
   );
   assert.deepEqual(parsedAddress, {
     city: "Calgary",
@@ -307,19 +352,20 @@ test("Check that COURT OVERRIDE suffix works 2", async function () {
   });
 });
 
-test("Check that TRAILS OVERRIDE suffix works", async function () {
+test("Check that TRAILS OVERRIDE long works", async function () {
   const parsedAddress = houskiAddressParser(
-    "6 Rivercrest trails SE|Calgary, Alberta T2C4K4"
+    "6 Rivercrest trails SE|Calgary, Alberta T2C4K4",
+    calgaryOverrides
   );
   assert.deepEqual(parsedAddress, {
     city: "Calgary",
     full: "6 Rivercrest Trails SE Calgary Alberta",
     fullWithCountry: "6 Rivercrest Trails SE Calgary Alberta Canada",
-    key: "6rivercresttrlsse",
+    key: "6rivercresttrsse",
     long: "6 Rivercrest Trails SE",
     postalCode: "T2C4K4",
     province: "Alberta",
-    short: "6 Rivercrest Trls SE",
+    short: "6 Rivercrest Trs SE",
   });
 });
 
