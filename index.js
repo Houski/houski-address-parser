@@ -223,10 +223,12 @@ module.exports = function houskiAddressParser(address) {
   const cityAndProvinceExist = city && province;
 
   const result = {
-    short: capitalizeAddress(shortAddress)
-      .split(" ")
-      .map((word) => suffix.abbreviate(word) || word)
-      .join(" "),
+    short: capitalizeAddress(
+      shortAddress
+        .split(" ")
+        .map((word) => suffix.abbreviate(word) || word)
+        .join(" ")
+    ),
     long: capitalizeAddress(longAddress),
     key: keyAddress,
     full: capitalizeAddress(

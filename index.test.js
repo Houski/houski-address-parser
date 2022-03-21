@@ -14,7 +14,7 @@ test("Having a street with the name of a province works w/ country", async funct
     long: "458 Quebec Street",
     postalCode: null,
     province: "Alberta",
-    short: "458 Quebec ST",
+    short: "458 Quebec St",
   });
 });
 
@@ -30,7 +30,7 @@ test("Having a street with the name of a province works w/ out country", async f
     long: "458 Quebec Street",
     postalCode: null,
     province: "Alberta",
-    short: "458 Quebec ST",
+    short: "458 Quebec St",
   });
 });
 
@@ -44,7 +44,7 @@ test("Having a street with the name of a city works", async function () {
     long: "908 Edmonton Trail",
     postalCode: null,
     province: null,
-    short: "908 Edmonton TR",
+    short: "908 Edmonton Tr",
   });
 });
 
@@ -60,7 +60,7 @@ test("Having a street with the name of a city works with the real city after it"
     long: "908 Edmonton Trail",
     postalCode: "T2E3K1",
     province: "Alberta",
-    short: "908 Edmonton TR",
+    short: "908 Edmonton Tr",
   });
 });
 
@@ -76,7 +76,7 @@ test("Symbols like hash signs are filtered out correctly", async function () {
     long: "7333 37 Avenue NW Edmonton Street",
     postalCode: null,
     province: "Alberta",
-    short: "7333 37 AVE NW Edmonton ST",
+    short: "7333 37 Ave NW Edmonton St",
   });
 });
 
@@ -92,7 +92,7 @@ test("Postal codes are parsed correctly", async function () {
     long: "7333 37 Avenue NW Edmonton Street",
     postalCode: "T2C3N4",
     province: "Alberta",
-    short: "7333 37 AVE NW Edmonton ST",
+    short: "7333 37 Ave NW Edmonton St",
   });
 });
 
@@ -109,7 +109,7 @@ test("Cities with spaces in the name pass", async function () {
     long: "7333 37 Avenue NW Edmonton Street",
     postalCode: "T2C3N4",
     province: "Alberta",
-    short: "7333 37 AVE NW Edmonton ST",
+    short: "7333 37 Ave NW Edmonton St",
   });
 });
 
@@ -126,7 +126,7 @@ test("French city names pass", async function () {
     long: "7333 37 Avenue NW 51st Street",
     postalCode: "T2C3N4",
     province: "Quebec",
-    short: "7333 37 AVE NW 51st ST",
+    short: "7333 37 Ave NW 51st St",
   });
 });
 
@@ -143,7 +143,7 @@ test("Ottawa-Gatineau passes", async function () {
     long: "7333 37 Avenue NW 51st Street",
     postalCode: "T2C3N4",
     province: "Ontario",
-    short: "7333 37 AVE NW 51st ST",
+    short: "7333 37 Ave NW 51st St",
   });
 });
 
@@ -159,7 +159,7 @@ test("Ottawa passes", async function () {
     long: "7333 37 Avenue NW 51st Street",
     postalCode: "T2C3N4",
     province: "Ontario",
-    short: "7333 37 AVE NW 51st ST",
+    short: "7333 37 Ave NW 51st St",
   });
 });
 
@@ -175,7 +175,7 @@ test("Gatineau passes", async function () {
     long: "7333 37 Avenue NW 51st Street",
     postalCode: "T2C3N4",
     province: "Ontario",
-    short: "7333 37 AVE NW 51st ST",
+    short: "7333 37 Ave NW 51st St",
   });
 });
 
@@ -191,7 +191,7 @@ test("Quebec City, Quebec passes", async function () {
     long: "7333 37 Avenue NW 51st Street",
     postalCode: "T2C3N4",
     province: "Quebec",
-    short: "7333 37 AVE NW 51st ST",
+    short: "7333 37 Ave NW 51st St",
   });
 });
 
@@ -239,7 +239,7 @@ test("Make sure SE is kept", async function () {
     long: "8 7630 Ogden Road SE",
     postalCode: "T2C1C1",
     province: "Alberta",
-    short: "8 7630 Ogden RD SE",
+    short: "8 7630 Ogden Rd SE",
   });
 });
 
@@ -255,7 +255,7 @@ test("Check that CLOSE suffix works", async function () {
     long: "239 Riverside Close SE",
     postalCode: null,
     province: "Alberta",
-    short: "239 Riverside CL SE",
+    short: "239 Riverside Cl SE",
   });
 });
 
@@ -271,7 +271,7 @@ test("Check that VILLA suffix works", async function () {
     long: "6 Rivercrest Villas SE",
     postalCode: "T2C4K4",
     province: "Alberta",
-    short: "6 Rivercrest VI SE",
+    short: "6 Rivercrest Vi SE",
   });
 });
 
@@ -287,7 +287,7 @@ test("Check that COURT OVERRIDE suffix works", async function () {
     long: "6 Rivercrest Court SE",
     postalCode: "T2C4K4",
     province: "Alberta",
-    short: "6 Rivercrest CO SE",
+    short: "6 Rivercrest Co SE",
   });
 });
 
@@ -303,7 +303,7 @@ test("Check that COURT OVERRIDE suffix works 2", async function () {
     long: "6 Rivercrest Court SE",
     postalCode: "T2C4K4",
     province: "Alberta",
-    short: "6 Rivercrest CO SE",
+    short: "6 Rivercrest Co SE",
   });
 });
 
@@ -319,7 +319,21 @@ test("Check that TRAILS OVERRIDE suffix works", async function () {
     long: "6 Rivercrest Trails SE",
     postalCode: "T2C4K4",
     province: "Alberta",
-    short: "6 Rivercrest TRLS SE",
+    short: "6 Rivercrest Trls SE",
+  });
+});
+
+test("Check that Warren's bug with caps is fixed", async function () {
+  const parsedAddress = houskiAddressParser("243 HAMPSTEAD WY NW");
+  assert.deepEqual(parsedAddress, {
+    city: null,
+    full: "243 Hampstead Way NW",
+    fullWithCountry: "243 Hampstead Way NW",
+    key: "243hampsteadwaynw",
+    long: "243 Hampstead Way NW",
+    postalCode: null,
+    province: null,
+    short: "243 Hampstead Way NW",
   });
 });
 
