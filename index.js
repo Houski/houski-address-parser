@@ -196,19 +196,8 @@ module.exports = function houskiAddressParser(address, overrides = []) {
   // Resplit the address for the final steps
   address = address.split(" ");
 
-  // Standardize each "word" of the address according to USPS standards.
-  let shortAddress = [...address].map(
-    (word) => suffix.abbreviate(word, overrides) || word
-  );
-
-  let longAddress = [...address].map(
-    (word) =>
-      (suffix.abbreviate(word, overrides) && suffix.expand(word, overrides)) ||
-      word
-  );
-
   // Rejoin the address and format
-  shortAddress = shortAddress
+  const shortAddress = [...address]
     .join(" ")
     .toUpperCase()
     .replace(regexDoubleSpaces, " ")
@@ -217,11 +206,19 @@ module.exports = function houskiAddressParser(address, overrides = []) {
     .map((word) => suffix.abbreviate(word, overrides) || word)
     .join(" ");
 
-  longAddress = longAddress
+  const longAddress = [...address]
     .join(" ")
     .toUpperCase()
     .replace(regexDoubleSpaces, " ")
-    .trim();
+    .trim()
+    .split(" ")
+    .map(
+      (word) =>
+        (suffix.abbreviate(word, overrides) &&
+          suffix.expand(word, overrides)) ||
+        word
+    )
+    .join(" ");
 
   keyAddress = shortAddress.replace(regexAllWhitespace, "").toLowerCase();
 

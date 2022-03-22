@@ -383,6 +383,34 @@ test("Check that Warren's bug with caps is fixed", async function () {
   });
 });
 
+test("Check that uppercase addresses work properly", async function () {
+  const parsedAddress = houskiAddressParser("53 TARAGLEN RD NE");
+  assert.deepEqual(parsedAddress, {
+    city: null,
+    full: "53 Taraglen Road NE",
+    fullWithCountry: "53 Taraglen Road NE",
+    key: "53taraglenrdne",
+    long: "53 Taraglen Road NE",
+    postalCode: null,
+    province: null,
+    short: "53 Taraglen Rd NE",
+  });
+});
+
+test("Check that lowercase addresses work properly", async function () {
+  const parsedAddress = houskiAddressParser("53 Taraglen Rd NE");
+  assert.deepEqual(parsedAddress, {
+    city: null,
+    full: "53 Taraglen Road NE",
+    fullWithCountry: "53 Taraglen Road NE",
+    key: "53taraglenrdne",
+    long: "53 Taraglen Road NE",
+    postalCode: null,
+    province: null,
+    short: "53 Taraglen Rd NE",
+  });
+});
+
 !(async function () {
   await test.run();
 })();
