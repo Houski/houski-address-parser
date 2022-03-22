@@ -34,7 +34,7 @@ That should give the resulting object of:
   }
 ```
 
-You can overide the abbreviations by passing in an array with this structure:
+You can _APPEND_ overiding suffixes to the default suffix set by passing in an array with this structure, and calling the function as shown.
 
 ```js
 const overrides = [
@@ -55,8 +55,16 @@ const overrides = [
   },
 ];
 
-// and then calling the address parser like so:
+houskiAddressParser(
+  "7333 37 AV NW t2c3n4 51st street Ottawa-Gatineau, Ontario, canada",
+  overrides,
+  true // THIS TRUE PARAMETER IS NEEDED TO APPEND EXTRA SUFFIXES INSTEAD OF ENTIRELY REPLACING THEM.
+);
+```
 
+You can _REPLACE_ the entire default suffix set by passing in an array (as shown above) and then calling the function as shown:
+
+```js
 houskiAddressParser(
   "7333 37 AV NW t2c3n4 51st street Ottawa-Gatineau, Ontario, canada",
   overrides

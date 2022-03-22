@@ -8,23 +8,33 @@ function checkString(str) {
   }
 }
 
-function expand(str, overrides = []) {
+function expand(str, overrides = [], append) {
   checkString(str);
-  const match = [...overrides, ...streetTypes].find((t) =>
-    t.abbrs.includes(str)
-  );
-  if (!match) {
+  let types = streetTypes;
+  if (overrides.length > 0) {
+    types = overrides;
+  }
+  if (overrides.length > 0 && append) {
+    types = [...overrides, ...streetTypes];
+  }
+  const match = types.find((t) => t.abbrs.includes(str));
+  if (typeof match?.long !== "string") {
     return str;
   }
   return match.long;
 }
 
-function abbreviate(str, overrides = []) {
+function abbreviate(str, overrides = [], append) {
   checkString(str);
-  const match = [...overrides, ...streetTypes].find((t) =>
-    t.abbrs.includes(str)
-  );
-  if (!match) {
+  let types = streetTypes;
+  if (overrides.length > 0) {
+    types = overrides;
+  }
+  if (overrides.length > 0 && append) {
+    types = [...overrides, ...streetTypes];
+  }
+  const match = types.find((t) => t.abbrs.includes(str));
+  if (typeof match?.short !== "string") {
     return str;
   }
   return match.short;

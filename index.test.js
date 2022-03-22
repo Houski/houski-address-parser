@@ -321,7 +321,8 @@ const calgaryOverrides = [
 test("Check that COURT OVERRIDE long works", async function () {
   const parsedAddress = houskiAddressParser(
     "6 Rivercrest CO SE|Calgary, Alberta T2C4K4",
-    calgaryOverrides
+    calgaryOverrides,
+    true
   );
   assert.deepEqual(parsedAddress, {
     city: "Calgary",
@@ -338,7 +339,8 @@ test("Check that COURT OVERRIDE long works", async function () {
 test("Check that COURT OVERRIDE long works 2", async function () {
   const parsedAddress = houskiAddressParser(
     "6 Rivercrest court SE|Calgary, Alberta T2C4K4",
-    calgaryOverrides
+    calgaryOverrides,
+    true
   );
   assert.deepEqual(parsedAddress, {
     city: "Calgary",
@@ -355,7 +357,8 @@ test("Check that COURT OVERRIDE long works 2", async function () {
 test("Check that TRAILS OVERRIDE long works", async function () {
   const parsedAddress = houskiAddressParser(
     "6 Rivercrest trails SE|Calgary, Alberta T2C4K4",
-    calgaryOverrides
+    calgaryOverrides,
+    true
   );
   assert.deepEqual(parsedAddress, {
     city: "Calgary",

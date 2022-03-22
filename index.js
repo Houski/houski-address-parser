@@ -1,7 +1,7 @@
 let suffix = require("./houski-street-suffix");
 let capitalizeAddress = require("./capitalize-address");
 
-module.exports = function houskiAddressParser(address, overrides = []) {
+module.exports = function houskiAddressParser(address, overrides = [], append) {
   const onlyLettersAndNumbers = /[^A-Za-z0-9]/gim;
   const onlyLettersNumbersDashesAndApostraphe = /[^A-Za-z0-9\-\' ]/gim;
   const specialCharacters = /\|/gim;
@@ -203,7 +203,7 @@ module.exports = function houskiAddressParser(address, overrides = []) {
     .replace(regexDoubleSpaces, " ")
     .trim()
     .split(" ")
-    .map((word) => suffix.abbreviate(word, overrides) || word)
+    .map((word) => suffix.abbreviate(word, overrides, append) || word)
     .join(" ");
 
   const longAddress = [...address]
@@ -214,8 +214,8 @@ module.exports = function houskiAddressParser(address, overrides = []) {
     .split(" ")
     .map(
       (word) =>
-        (suffix.abbreviate(word, overrides) &&
-          suffix.expand(word, overrides)) ||
+        (suffix.abbreviate(word, overrides, append) &&
+          suffix.expand(word, overrides, append)) ||
         word
     )
     .join(" ");
